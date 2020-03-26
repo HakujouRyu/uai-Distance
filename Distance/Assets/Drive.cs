@@ -16,6 +16,21 @@ public class Drive : MonoBehaviour
 
     }
 
+    void CalculateAngle()
+    {
+        Vector3 tF = this.transform.up;
+        Vector3 fD = fuel.transform.position - this.transform.position;
+
+        float dot = (tF.x * fD.x) + (tF.y * fD.y);
+
+        float angle = Mathf.Acos( ( dot / (tF.magnitude * fD.magnitude) ) );
+        
+        Debug.Log("Angle: " + angle * Mathf.Rad2Deg);
+        Debug.Log("Unity Ang: " + Vector3.Angle(tF, fD));
+        Debug.DrawRay(this.transform.position, tF * 10, Color.green, 2);
+        Debug.DrawRay(this.transform.position, fD, Color.red, 2);
+    }
+
     void CalculateDistance()
     {
         Vector3 tP = this.transform.position;
@@ -28,6 +43,7 @@ public class Drive : MonoBehaviour
         Debug.Log("Distance: "+ distance);
         Debug.Log("UDistance: "+ unityDistance);
     }
+
 
     void Update()
     {
@@ -50,6 +66,7 @@ public class Drive : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             CalculateDistance();
+            CalculateAngle();
         }
 
     }
